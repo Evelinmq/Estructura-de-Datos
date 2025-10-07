@@ -22,12 +22,10 @@ public class App {
         String[] arrayString = {"Hola1", "Hola2", "Hola3"};
         Integer[] arrayInt = {5,6,8,2};
 
+        System.out.println("____________________________________");
         printArray(arrayString);
-
+        System.out.println("____________________________________");
         printArray(arrayInt);
-
-
-
 
     }
 }
