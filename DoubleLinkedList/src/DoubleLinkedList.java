@@ -44,12 +44,10 @@ public class DoubleLinkedList {
     }
 
     public boolean contains(int data){
-        /*if(head == null){
+        if(head == null){
             System.out.println("Tu lista está vacía");
             return false;
         }
-            Notifica al usuario
-            */
 
         Node current = head;
         while (current != null) {
@@ -66,6 +64,7 @@ public class DoubleLinkedList {
     
     public void remove(int data){
         if(head == null){ //Pregunta si la lista está vacía
+            System.out.println("Tu lista está vacía");
             return;
         }
         
@@ -73,6 +72,8 @@ public class DoubleLinkedList {
         if(head.data == data){ //Valida que el dato esté en el head
             head = head.next; //Elimina el primer nodo
             return;
+        }else{
+            System.out.println("valor no encontrado");
         }
 
         Node current = head;
