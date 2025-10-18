@@ -11,8 +11,11 @@ public class App {
         list.add(5);
         list.add(6);
 
-        System.out.println("-----------Imprimir forward---------");
+        System.out.println("-----------Imprimir forward antes de eliminar---------");
         list.printForward();
+        System.out.println("-----------Imprimir backward antes de eliminar---------");
+        list.printBackward();
+
         System.out.println("-----------Remover de la lista---------");
         list.remove(5);
         System.out.println("Forward");
