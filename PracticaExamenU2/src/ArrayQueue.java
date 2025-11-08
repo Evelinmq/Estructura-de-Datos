@@ -15,7 +15,9 @@ public class ArrayQueue<T> implements IQueue<T> {
 
     @Override
     public void offer(T element) {
-        expandCapacity();
+        if (size==data.length) {
+            expandCapacity();
+        }
         data[rear] = element;
         rear = (rear + 1) % data.length;
         size++;

@@ -45,8 +45,10 @@ public class ArrayStack<T> implements IStack<T> {
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        for (int i = 0; i < this.top; i++) {
+            data[i]=null;
+        }
+        this.top=0;
     }
 
     @Override

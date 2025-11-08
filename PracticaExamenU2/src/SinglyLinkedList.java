@@ -70,4 +70,47 @@ public class SinglyLinkedList {
         System.out.println("null");
     }
 
+    public int size() {
+        int count = 0;
+        Node current = head;
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
+
+    public JobCustom removeLast() {
+        if (head == null) {
+            return null;
+        }
+
+        if (head.next == null) {
+            JobCustom data = head.data;
+            head = null; 
+            return data;
+        }
+        Node current = head;
+        while (current.next.next != null) {
+            current = current.next;
+        }
+        JobCustom data = current.next.data; 
+        current.next = null; 
+        
+        return data;
+    }
+
+
+    public int contador(JobCustom data) {
+        int i=0;
+        Node current=head; 
+        while (current != null) {
+            if (current.data == data) {
+                i++;
+            }
+            current = current.next;
+        }
+        return i;
+    }
+
 }
