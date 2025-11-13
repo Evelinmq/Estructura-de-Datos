@@ -9,7 +9,7 @@ public class InsertionSort {
             int temp = arr[i]; //El primer elemento de la parte desordenada (comparativo)
             int j = i-1; //Comenzamos desde el último elemento de la parte ordenada
 
-            while (j > 0 && arr[j] > temp) { //Recorrer la parte ordenada (fin-inicial)
+            while (j >= 0 && arr[j] > temp) { //Recorrer la parte ordenada (fin-inicial)
                 //Recorrer la derecha los elementos mayores al temporal
                 arr[j+1] = arr[j];
                 j--;
