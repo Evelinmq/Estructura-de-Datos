@@ -6,6 +6,7 @@ import mx.edu.utez.integradora.model.Book;
 import mx.edu.utez.integradora.model.HistoryAction;
 import mx.edu.utez.integradora.model.Loan;
 import mx.edu.utez.integradora.structure.ArrayStack;
+import mx.edu.utez.integradora.structure.SinglyLinkedList;
 
 @Service
 public class LoanService {

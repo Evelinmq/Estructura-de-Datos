@@ -1,6 +1,6 @@
 package mx.edu.utez.integradora.structure;
 
-public class ArrayQueue <T> implements IQueue<Object>{
+public class ArrayQueue <T> implements IQueue<T>{
 
     private Object[] data;
     private int rear; //Indice de insercción
@@ -16,7 +16,7 @@ public class ArrayQueue <T> implements IQueue<Object>{
     }
 
     @Override
-    public void offer(Object element) {
+    public void offer(T element) {
         //Verificar la capacidad del array ()
         expandCapacity();
         data[rear] = element; //Pone el elemento en el índice asignado (rear)
@@ -25,7 +25,7 @@ public class ArrayQueue <T> implements IQueue<Object>{
     }
 
     @Override
-    public Object poll() {
+    public T poll() {
         if (isEmpty()) {
             System.out.println("La Queue está vacía");
             return null;
@@ -38,17 +38,20 @@ public class ArrayQueue <T> implements IQueue<Object>{
     }
 
     @Override
-    public Object peek() {
+    public T peek() {
         if (isEmpty()) {
             System.out.println("La Queue está vacía");
             return null;
         }
-        return data[front];
+        return (T) data[front];
     }
 
     @Override
     public void clear() {
-        
+        data = new Object[INITIAL_CAPACITY];
+        front = 0;
+        rear = 0;
+        size = 0;
     }
 
     private void expandCapacity(){
@@ -68,7 +71,7 @@ public class ArrayQueue <T> implements IQueue<Object>{
         sb.append("[");
         for (int i = 0; i < size; i++) {
             sb.append(data[ (front + i) % data.length ]);
-            if (i <= size-1) {
+            if (i < size-1) {
                 sb.append(" -> ");
             }
         }
@@ -84,5 +87,10 @@ public class ArrayQueue <T> implements IQueue<Object>{
     @Override
     public int getSize() {
         return size;
+    }
+
+    public boolean remove(int userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 }

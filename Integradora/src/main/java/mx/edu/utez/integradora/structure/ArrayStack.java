@@ -1,5 +1,7 @@
 package mx.edu.utez.integradora.structure;
 
+import mx.edu.utez.integradora.model.HistoryAction;
+
 public class ArrayStack<T> implements IStack<T> {
 
     private Object[] data;
@@ -84,5 +86,10 @@ public class ArrayStack<T> implements IStack<T> {
 
         sb.append("]");
         System.out.println(sb.toString());
+    }
+
+    public HistoryAction[] toArray() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toArray'");
     } 
 }

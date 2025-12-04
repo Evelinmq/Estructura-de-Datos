@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mx.edu.utez.integradora.model.Book;
 import mx.edu.utez.integradora.service.BookService;
+import mx.edu.utez.integradora.structure.ArrayQueue;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -20,7 +21,7 @@ public class ReservationController {
     }
 
     @GetMapping("/book/{id}")
-    public int[] getWaitlist(@PathVariable int id) {
+    public ArrayQueue<Integer> getWaitlist(@PathVariable int id) {
         Book book = bookService.getById(id);
         return book.getWaitlist();
     }
