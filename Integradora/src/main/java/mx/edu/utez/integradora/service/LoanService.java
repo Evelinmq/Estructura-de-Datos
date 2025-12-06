@@ -6,11 +6,11 @@ import mx.edu.utez.integradora.model.Book;
 import mx.edu.utez.integradora.model.HistoryAction;
 import mx.edu.utez.integradora.model.Loan;
 import mx.edu.utez.integradora.structure.ArrayStack;
-import mx.edu.utez.integradora.structure.SinglyLinkedList;
+import mx.edu.utez.integradora.structure.LoanLinkedList;
 
 @Service
 public class LoanService {
-    private final SinglyLinkedList loans = new SinglyLinkedList();
+    private final LoanLinkedList loans = new LoanLinkedList();
     private final ArrayStack<HistoryAction> history = new ArrayStack<>();
 
     private final BookService bookService;
@@ -24,90 +24,113 @@ public class LoanService {
         Book book = bookService.getById(bookId);
         if (book == null) return null;
 
-        // Caso A: hay copias
+        // Caso 1: hay copias disponibles
         if (book.getAvaliableCopies() > 0) {
 
             int newId = loans.size() + 1;
 
-            Loan loan = new Loan(newId, userId, bookId);
+            Loan loan = new Loan(newId, userId, bookId, false);
             loans.add(loan);
 
             book.setAvaliableCopies(book.getAvaliableCopies() - 1);
 
+            //Registrar en el historisl
             history.push(new HistoryAction(
-                HistoryAction.Type.CREATE_LOAN, loan, userId, bookId
+                HistoryAction.Type.CREATE_LOAN,
+                    loan,
+                    userId,
+                    bookId
             ));
 
             return loan;
         }
 
-        // Caso B: NO hay copias → agregar al waitlist
-        book.getWaitlist().enqueue(userId);
+        // Caso 2: NO hay copias, se agrega al waitlist (lista de espera)
+        book.getWaitlist().offer(String.valueOf(userId));
 
+        //Registra en waitlist
         history.push(new HistoryAction(
-            HistoryAction.Type.ADD_TO_WAITLIST, null, userId, bookId
+            HistoryAction.Type.ADD_TO_WAITLIST,
+                null,
+                userId,
+                bookId
         ));
 
         return null;
     }
 
-    // Devolución (Flujo C)
+    // Devolución de libros (Flujo C)
     public boolean returnLoan(int loanId) {
         Loan loan = findById(loanId);
         if (loan == null || loan.isReturned()) return false;
 
         loan.setReturned(true);
+
         Book book = bookService.getById(loan.getBookId());
 
         // Registrar en historial
         history.push(new HistoryAction(
-            HistoryAction.Type.RETURN_LOAN, loan, loan.getUserId(), loan.getBookId()
+            HistoryAction.Type.RETURN_LOAN,
+                loan,
+                loan.getUserId(),
+                loan.getBookId()
         ));
 
-        // Revisar waitlist
+        // Revisar waitlist para dr libros a personas en la queue
         if (!book.getWaitlist().isEmpty()) {
-            int nextUser = book.getWaitlist().dequeue();
-            createLoan(nextUser, book.getId());  // préstamo automático
+            String nextUserStr = book.getWaitlist().poll();
+            int nextUser = Integer.parseInt(nextUserStr);
+
+            createLoan(nextUser, book.getId());
+
         } else {
+            // Si nadie esta en la lista de espera, devolver la copia
             book.setAvaliableCopies(book.getAvaliableCopies() + 1);
         }
 
         return true;
     }
 
+
+    //Búsqueda de préstamo por ID
     public Loan findById(int id) {
-        Object[] array = loans.toArray();
-        for (Object o : array) {
+        Object[] arr = loans.toArray();
+        for (Object o : arr) {
             Loan l = (Loan) o;
             if (l.getId() == id) return l;
         }
         return null;
     }
 
+    //Préstamos activos
     public Loan[] getActiveLoans() {
-        SinglyLinkedList list = new SinglyLinkedList();
-        Object[] arr = loans.toArray();
+        LoanLinkedList list = new LoanLinkedList();
 
-        for (Object o : arr) {
+        for (Object o : loans.toArray()) {
             Loan l = (Loan) o;
-            if (!l.isReturned()) list.add(l);
+            if (!l.isReturned()) {
+                list.add(l);
+            }
         }
 
         return (Loan[]) list.toArray();
     }
 
+    //Obtener info de préstamos por usuario
     public Loan[] getLoansByUser(int userId) {
-        SinglyLinkedList list = new SinglyLinkedList();
-        Object[] arr = loans.toArray();
+        LoanLinkedList list = new LoanLinkedList();
 
-        for (Object o : arr) {
+        for (Object o : loans.toArray()) {
             Loan l = (Loan) o;
-            if (l.getUserId() == userId) list.add(l);
+            if (l.getUserId() == userId) {
+                list.add(l);
+            }
         }
 
         return (Loan[]) list.toArray();
     }
 
+    //Stack de historial
     public ArrayStack<HistoryAction> getHistoryStack() {
         return history;
     }
