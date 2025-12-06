@@ -98,7 +98,7 @@ public class BookController {
         return ResponseEntity.ok(service.searchByTitle(title));
     }
 
-    // Método auxiliar para errores (igual que en tu SortController)
+    // Metodo auxiliar para errores
     private ResponseEntity<ErrorResponse> error(String err, String detail) {
         ErrorResponse e = new ErrorResponse();
         e.setError(err);
