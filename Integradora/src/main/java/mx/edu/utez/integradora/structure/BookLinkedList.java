@@ -1,7 +1,5 @@
 package mx.edu.utez.integradora.structure;
 
-import java.util.ArrayList;
-
 import mx.edu.utez.integradora.model.Book;
 
 public class BookLinkedList {
@@ -78,14 +76,8 @@ public class BookLinkedList {
     }
 
     // OBTENER TODOS LOS LIBROS
-    public ArrayList<Book> getAll() {
-        ArrayList<Book> list = new ArrayList<>();
-        BookNode current = head;
-        while (current != null) {
-            list.add(current.data);
-            current = current.next;
-        }
-        return list;
+    public Book[] getAll() {
+        return toArray();
     }
 
     public BookNode getHead() {

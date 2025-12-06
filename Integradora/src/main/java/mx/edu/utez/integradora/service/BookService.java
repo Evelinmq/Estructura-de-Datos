@@ -1,5 +1,6 @@
 package mx.edu.utez.integradora.service;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.integradora.dto.ErrorResponse;
@@ -11,6 +12,24 @@ import mx.edu.utez.integradora.structure.BookLinkedList;
 public class BookService {
     private final BookLinkedList books = new BookLinkedList();
     private static final int MAX_WAITLIST = 50;
+
+    @PostConstruct
+    public void init() {
+        Book b1 = new Book(1, "El Principito", "Antoine de Saint-Exupéry", 10);
+        b1.setWaitlist(new ArrayQueue<>());
+        books.add(b1);
+
+        Book b2 = new Book(2, "Cien años de soledad", "Gabriel García Márquez", 7);
+        b2.setWaitlist(new ArrayQueue<>());
+        books.add(b2);
+
+        Book b3 = new Book(3, "Fahrenheit 451", "Ray Bradbury", 3);
+        b3.setWaitlist(new ArrayQueue<>());
+        books.add(b3);
+
+        System.out.println(">>> Libros precargados en LinkedList.");
+    }
+
 
     // Registrar libro
     public Book create(Book book) {
@@ -80,7 +99,7 @@ public class BookService {
             book.setWaitlist(new ArrayQueue<>());
         }
 
-        ArrayQueue queue = book.getWaitlist();
+        ArrayQueue<String> queue = book.getWaitlist();
 
         // Validar límite de la lista de espera
         if (queue.getSize() >= MAX_WAITLIST) {

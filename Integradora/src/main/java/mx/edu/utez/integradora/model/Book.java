@@ -14,5 +14,14 @@ public class Book {
     String author;
     int avaliableCopies;
     boolean active;
-    public ArrayQueue<Integer> waitlist;
+    public ArrayQueue<String> waitlist;
+
+    public Book(int id, String title, String author, int avaliableCopies) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.avaliableCopies = avaliableCopies;
+        this.active = true;                    // activado por defecto
+        this.waitlist = new ArrayQueue<>();
+    }
 }
