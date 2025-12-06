@@ -1,6 +1,6 @@
 package mx.edu.utez.integradora.structure;
 
-public class ArrayQueue <T> implements IQueue<T>{
+public class ArrayQueue<T> implements IQueue<T>{
 
     private Object[] data;
     private int rear; //Indice de insercción
@@ -18,12 +18,15 @@ public class ArrayQueue <T> implements IQueue<T>{
     @Override
     public void offer(T element) {
         //Verificar la capacidad del array ()
-        expandCapacity();
+        if (size == data.length) {
+            expandCapacity();
+        }
         data[rear] = element; //Pone el elemento en el índice asignado (rear)
         rear = (rear + 1) % data.length; //Recalcula rear pero evita que se desborde
         size++;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T poll() {
         if (isEmpty()) {
@@ -71,7 +74,7 @@ public class ArrayQueue <T> implements IQueue<T>{
         sb.append("[");
         for (int i = 0; i < size; i++) {
             sb.append(data[ (front + i) % data.length ]);
-            if (i < size-1) {
+            if (i <= size-1) {
                 sb.append(" -> ");
             }
         }
@@ -87,10 +90,5 @@ public class ArrayQueue <T> implements IQueue<T>{
     @Override
     public int getSize() {
         return size;
-    }
-
-    public boolean remove(int userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 }
