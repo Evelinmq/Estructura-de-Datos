@@ -22,7 +22,7 @@ public class HistoryController {
 
     @GetMapping
     public HistoryAction[] getHistory() {
-        return (HistoryAction[]) loanService.getHistoryStack().toArray();
+        return loanService.getHistoryStack().toArray();
     }
 
     @PostMapping("/undo")

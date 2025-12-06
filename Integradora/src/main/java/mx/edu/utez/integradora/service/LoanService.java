@@ -14,10 +14,23 @@ public class LoanService {
     private final ArrayStack<HistoryAction> history = new ArrayStack<>();
 
     private final BookService bookService;
+    private final LoanLinkedList loan = new LoanLinkedList();
+
 
     public LoanService(BookService bookService) {
         this.bookService = bookService;
     }
+
+    public Loan[] getLoans() {
+        return (Loan[]) loan.toArray();
+    }
+
+    // Eliminar préstamo por id (usado por HistoryService - undo)
+    public boolean removeLoan(int id) {
+        return loan.remove(id);
+    }
+
+
 
     // Crear préstamo (Flujo B)
     public Loan createLoan(int userId, int bookId) {

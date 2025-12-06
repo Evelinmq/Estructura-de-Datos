@@ -6,7 +6,6 @@ public class ArrayStack<T> implements IStack<T> {
 
     private Object[] data;
     private int top;
-    //private static final int INITIAL = 10;
     
     //Constructor 1
     public ArrayStack() {
@@ -21,8 +20,16 @@ public class ArrayStack<T> implements IStack<T> {
 
     @Override
     public void push(T element) {
-        //Vamos a asegurar que aún tenga espacio el array
-        data[top++] = (T) element;
+        if (top == data.length) {
+            expand();
+        }
+        data[top++] = element;
+    }
+
+    private void expand() {
+        Object[] newArr = new Object[data.length * 2];
+        System.arraycopy(data, 0, newArr, 0, data.length);
+        data = newArr;
     }
 
     @SuppressWarnings("unchecked")
@@ -44,13 +51,13 @@ public class ArrayStack<T> implements IStack<T> {
             System.out.println("La pila está vacía");
             return null;
         }
-        return (T) data[top];
+        return (T) data[top - 1];
     }
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        data = new Object[10];
+        top = 0;
     }
 
     @Override
@@ -61,17 +68,16 @@ public class ArrayStack<T> implements IStack<T> {
     @Override
     public boolean isEmpty() {
         return top == 0;
-        /*
-        Este es lo mismo que el return de arriba
-        if(top == 0){
-            return true;
-        }
-        return false;*/
     }
 
     @Override
     public void print() {
+        for (int i = top - 1; i >= 0; i--) {
+            System.out.print(data[i] + " -> ");
+        }
+        System.out.println("null");
 
+        /*
         //Es como si se hiciera un acumulador
         StringBuilder sb = new StringBuilder();
         sb.append("[");
@@ -79,17 +85,21 @@ public class ArrayStack<T> implements IStack<T> {
         //Recorre el arreglo al revés, es decir, desde la punta
         for (int i = top-1; i >= 0; i--) {
             sb.append(data[i]);
-            if (i != 0) { 
-                sb.append(" -> "); 
+            if (i != 0) {
+                sb.append(" -> ");
             }
         }
 
         sb.append("]");
         System.out.println(sb.toString());
+         */
     }
 
     public HistoryAction[] toArray() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        HistoryAction[] arr = new HistoryAction[top];
+        for (int i = 0; i < top; i++) {
+            arr[i] = (HistoryAction) data[i];
+        }
+        return arr;
     } 
 }
