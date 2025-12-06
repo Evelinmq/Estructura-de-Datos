@@ -1,5 +1,6 @@
 package mx.edu.utez.integradora.controller;
 
+import mx.edu.utez.integradora.service.ReservationService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,21 +15,27 @@ import mx.edu.utez.integradora.structure.ArrayQueue;
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationController {
-    private final BookService bookService;
+    private final ReservationService service;
 
-    public ReservationController(BookService bookService) {
-        this.bookService = bookService;
+    public ReservationController(ReservationService service) {
+        this.service = service;
     }
 
-    @GetMapping("/book/{id}")
-    public ArrayQueue<Integer> getWaitlist(@PathVariable int id) {
-        Book book = bookService.getById(id);
-        return book.getWaitlist();
+    // Obtener reservas por libro
+    @GetMapping("/book/{bookId}")
+    public String[] getReservations(@PathVariable int bookId) {
+        return service.getReservationsByBook(bookId);
     }
 
+    // Consultar posición
+    @GetMapping("/position")
+    public int getPosition(@RequestParam int userId, @RequestParam int bookId) {
+        return service.getUserPosition(userId, bookId);
+    }
+
+    // Cancelar reserva
     @DeleteMapping
-    public boolean delete(@RequestParam int userId, @RequestParam int bookId) {
-        Book book = bookService.getById(bookId);
-        return book.getWaitlist().remove(userId);
+    public boolean cancel(@RequestParam int userId, @RequestParam int bookId) {
+        return service.cancelReservation(userId, bookId);
     }
 }

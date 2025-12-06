@@ -24,4 +24,6 @@ public class Book {
         this.active = true;                    // activado por defecto
         this.waitlist = new ArrayQueue<>();
     }
+
+    public ArrayQueue<String> getWaitlist() { return waitlist; }
 }

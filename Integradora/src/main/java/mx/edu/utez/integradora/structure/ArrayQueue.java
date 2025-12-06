@@ -51,11 +51,21 @@ public class ArrayQueue<T> implements IQueue<T>{
 
     @Override
     public void clear() {
-        data = new Object[INITIAL_CAPACITY];
         front = 0;
-        rear = 0;
+        rear = -1;
         size = 0;
     }
+
+    @SuppressWarnings("unchecked")
+    public T[] toArray() {
+        T[] result = (T[]) new Object[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = (T) data[(front + i) % data.length];
+        }
+        return result;
+    }
+
+
 
     private void expandCapacity(){
         Object[] newArr = new Object[data.length*2]; //Creación de nuevo arreglo
