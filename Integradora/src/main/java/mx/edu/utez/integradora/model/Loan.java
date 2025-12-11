@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Loan {
-    int id;
-    int userId;
-    int bookId;
-    boolean returned = false;
+    private int id;
+    private int userId;
+    private int bookId;
+    private boolean returned = false;
 
     public boolean isReturned() { 
         return returned; 

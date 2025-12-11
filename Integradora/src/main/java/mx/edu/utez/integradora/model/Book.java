@@ -9,12 +9,12 @@ import mx.edu.utez.integradora.structure.ArrayQueue;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
-    int id;
-    String title;
-    String author;
-    int avaliableCopies;
-    boolean active;
-    public ArrayQueue<String> waitlist;
+    private int id;
+    private String title;
+    private String author;
+    private int avaliableCopies;
+    private boolean active;
+    private ArrayQueue<String> waitlist;
 
     public Book(int id, String title, String author, int avaliableCopies) {
         this.id = id;
