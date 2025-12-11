@@ -74,7 +74,7 @@ public class BookController {
         return ResponseEntity.ok(updated);
     }
 
-    // Baja lógica del libro / cambio de estatus
+    // Cambio de estatus
     @PatchMapping("/{id}/status")
     public ResponseEntity<?> updateStatus(@PathVariable int id, @RequestParam boolean active) {
 
@@ -87,7 +87,7 @@ public class BookController {
         return ResponseEntity.ok("Estatus actualizado");
     }
 
-    // Buscar por título (query param)
+    // Buscar por título
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String title) {
 
