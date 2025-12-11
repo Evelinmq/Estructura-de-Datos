@@ -58,7 +58,7 @@ public class LoanService {
             return loan;
         }
 
-        // Caso 2: NO hay copias, se agrega al waitlist (lista de espera)
+        // Caso 2: No hay copias, se agrega al waitlist (lista de espera)
         book.getWaitlist().offer(String.valueOf(userId));
 
         //Registra en waitlist

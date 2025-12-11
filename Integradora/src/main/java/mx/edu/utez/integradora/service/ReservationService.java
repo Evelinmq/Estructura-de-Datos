@@ -16,9 +16,18 @@ public class ReservationService {
         Book book = bookService.getById(bookId);
         if (book == null) return null;
 
-        String[] arr = book.getWaitlist().toArray();
+        //String[] arr = book.getWaitlist().toArray();
+
+        Object[] temp = book.getWaitlist().toArray();
+        String[] arr = new String[temp.length];
+
+        for (int i = 0; i < temp.length; i++) {
+            arr[i] = temp[i].toString();
+        }
+
 
         return arr;
+
     }
 
     // Consultar posición del usuario
@@ -28,13 +37,13 @@ public class ReservationService {
 
         String target = String.valueOf(userId);
 
-        String[] arr = book.getWaitlist().toArray();
-
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i].equals(target)) {
-                return i + 1; // posiciones empiezan en 1
+        Object[] temp = book.getWaitlist().toArray();
+        for (int i = 0; i < temp.length; i++) {
+            if (temp[i].toString().equals(target)) {
+                return i + 1;
             }
         }
+
         return -1;
     }
 
@@ -45,16 +54,15 @@ public class ReservationService {
 
         String target = String.valueOf(userId);
 
-        String[] arr = book.getWaitlist().toArray();
-
-        // reconstruir cola sin el user
+        Object[] temp = book.getWaitlist().toArray();
         book.getWaitlist().clear();
 
         boolean removed = false;
 
-        for (String u : arr) {
+        for (Object o : temp) {
+            String u = o.toString();
             if (u.equals(target)) {
-                removed = true;  // no volver a añadirlo
+                removed = true;  // no lo añadimos
             } else {
                 book.getWaitlist().offer(u);
             }

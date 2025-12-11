@@ -27,6 +27,10 @@ public class BookService {
         b3.setWaitlist(new ArrayQueue<>());
         books.add(b3);
 
+        Book b4 = new Book(4, "Una corte de niebla y furia", "Sarah J: Maaas", 1);
+        b4.setWaitlist(new ArrayQueue<>());
+        books.add(b4);
+
         System.out.println(">>> Libros precargados en LinkedList.");
     }
 
