@@ -15,6 +15,34 @@ public class ArrayQueue<T> implements IQueue<T>{
         this.size = 0;
     }
 
+    public Object[] getData() {
+        return data;
+    }
+
+    public void setData(Object[] data) {
+        this.data = data;
+    }
+
+    public int getRear() {
+        return rear;
+    }
+
+    public void setRear(int rear) {
+        this.rear = rear;
+    }
+
+    public int getFront() {
+        return front;
+    }
+
+    public void setFront(int front) {
+        this.front = front;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     @Override
     public void offer(T element) {
         //Verificar la capacidad del array ()
